@@ -8,7 +8,7 @@
     "build": "imbac --standalone sticky-notes.imba",
     "build:watch": "imbac --watch --standalone sticky-notes.imba",
     "check-version": "imbac --version",
-    "dev": "echo dev"
+    "dev": "parcel index.html"
   },
   "dependencies": {
     "imba": "^2.0.0-alpha.13"
