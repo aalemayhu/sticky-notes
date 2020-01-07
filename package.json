@@ -5,8 +5,8 @@
   "author": "Alexander Alemayhu <alexander@alemayhu.com>",
   "license": "MIT",
   "scripts": {
-    "build": "imbac --standalone sticky-notes.imba",
-    "build:watch": "imbac --watch --standalone sticky-notes.imba",
+    "build": "imba build.imba",
+    "build:watch": "echo TODO",
     "check-version": "imbac --version",
     "dev": "parcel index.html"
   },
