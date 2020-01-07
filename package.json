@@ -1,0 +1,16 @@
+{
+  "name": "sticky-notes",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Alexander Alemayhu <alexander@alemayhu.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "imbac --standalone sticky-notes.imba",
+    "build:watch": "imbac --watch --standalone sticky-notes.imba",
+    "check-version": "imbac --version",
+    "dev": "echo dev"
+  },
+  "dependencies": {
+    "imba": "^2.0.0-alpha.13"
+  }
+}
