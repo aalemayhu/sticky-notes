@@ -11,5 +11,3 @@ tag sticky-notes
     <self>
       <h1> "Sticky Notes"
       <h2> ";fdlskdsjl"
-
-imba.mount <sticky-notes>
