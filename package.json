@@ -5,12 +5,18 @@
   "author": "Alexander Alemayhu <alexander@alemayhu.com>",
   "license": "MIT",
   "scripts": {
-    "build": "imba build.imba",
-    "build:watch": "echo TODO",
-    "check-version": "imbac --version",
-    "dev": "parcel index.html"
+    "build": "rollup -c",
+    "watch": "rollup -c --watch",
+    "serve": "parcel public/index.html",
+    "check-version": "imbac --version"
   },
   "dependencies": {
     "imba": "^2.0.0-alpha.13"
+  },
+  "devDependencies": {
+    "parcel": "^1.12.4",
+    "rollup": "^1.28.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0"
   }
 }
