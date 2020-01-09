@@ -9,14 +9,28 @@ body {
 }
 ###
 
-var notes = []
+let persisted = localStorage.getItem('notes')
+var notes = persisted ? JSON.parse(persisted) : []
 
 tag sticky-notes
 
+  def syncStorage
+    console.log "syncStorage"
+    localStorage.setItem('notes', JSON.stringify(self.notes))
+
+  # TODO: also handle deletion, maybe delete when hitting backspace in an empty
+  # note
   def createNew
     console.log "createNew"
-    # TODO: make it a placeholder text?
-    self.notes.push({body: 'Enter note here'})
+    self.notes.push({body: ''})
+    syncStorage()
+
+  def noteChanged index
+    console.log "noteChanged",index
+    let note = document.querySelector("#note-{index}").innerText
+    # console.log("note ->: ",note, 'EOF')
+    @notes[index].body = note
+    self.syncStorage()
 
   def render
     ### css scoped
@@ -51,8 +65,8 @@ tag sticky-notes
       <button :click.createNew()> "New"
       <div.notes>
         for note in @notes
-          <div.note contentEditable=true>
+          let index = @notes.indexOf(note)
+          <div.note id="note-{index}" contentEditable=true :keydown.noteChanged(index)>
             <p> note.body
-            <pre> JSON.stringify(note, null, 2)
-
+          # TODO: refactor note div into a own tag.
 imba.mount <sticky-notes notes=notes>
