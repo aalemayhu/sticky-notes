@@ -40,7 +40,7 @@ tag sticky-notes
       background: purple;
       background: #FFFF80;
       min-width: 128px;
-      min-width: 128px;
+      min-height: 128px;
       padding: 1rem;
       margin: 0.15rem;
     }
