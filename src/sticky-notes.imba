@@ -23,7 +23,7 @@ tag sticky-notes
   def createNew
     console.log "createNew"
     self.notes.push({body: ''})
-    syncStorage()
+    self.syncStorage()
 
   def noteChanged index
     console.log "noteChanged",index
