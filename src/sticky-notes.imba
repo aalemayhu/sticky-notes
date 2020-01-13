@@ -9,10 +9,15 @@ body {
 }
 ###
 
-let persisted = localStorage.getItem('notes')
-var notes = persisted ? JSON.parse(persisted) : []
-
 tag sticky-notes
+
+  def setup
+    @notes = []
+    
+    let keys = Object.keys(localStorage).filter do |k|
+      k.startsWith("note")
+    for key in keys
+      @notes.push(JSON.parse(localStorage.getItem(key)))
 
   def syncStorage
     console.log "syncStorage"
@@ -22,16 +27,18 @@ tag sticky-notes
   # note
   # TODO: support pasting into the sticky notes
   def createNew
-    console.log "createNew"
-    self.notes.push({body: ''})
-    self.syncStorage()
+    let container = document.querySelector(".notes")
+    let count = Object.keys(localStorage).length + 1
+    let id = "note-{count}"
+    let note = {body: '', id: id}
+    localStorage.setItem(id, JSON.stringify(note))
+    # TODO: touch the DOM
 
-  def noteChanged index
-    console.log "noteChanged",index
-    let note = document.querySelector("#note-{index}").innerHTML
-    # console.log("note ->: ",note, 'EOF')
-    @notes[index].body = note
-    self.syncStorage()
+  def noteChanged identifier
+    let body = document.querySelector("#{identifier}").innerHTML
+    let id = identifier
+    let note = {id: id, body: body}
+    localStorage.setItem(id, JSON.stringify(note))
 
   def render
     ### css scoped
@@ -66,8 +73,7 @@ tag sticky-notes
       <button :click.createNew()> "New"
       <div.notes>
         for note in @notes
-          let index = @notes.indexOf(note)
-          <div.note id="note-{index}" contentEditable=true :keydown.noteChanged(index)>
+          <div.note id="{note.id}" contentEditable=true :keydown.noteChanged(note.id)>
             <p> note.body
           # TODO: refactor note div into a own tag.
-imba.mount <sticky-notes notes=notes>
+imba.mount <sticky-notes>
