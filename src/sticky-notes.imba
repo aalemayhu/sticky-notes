@@ -20,6 +20,7 @@ tag sticky-notes
 
   # TODO: also handle deletion, maybe delete when hitting backspace in an empty
   # note
+  # TODO: support pasting into the sticky notes
   def createNew
     console.log "createNew"
     self.notes.push({body: ''})
@@ -27,7 +28,7 @@ tag sticky-notes
 
   def noteChanged index
     console.log "noteChanged",index
-    let note = document.querySelector("#note-{index}").innerText
+    let note = document.querySelector("#note-{index}").innerHTML
     # console.log("note ->: ",note, 'EOF')
     @notes[index].body = note
     self.syncStorage()
