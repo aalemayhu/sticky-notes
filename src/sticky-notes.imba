@@ -9,6 +9,27 @@ body {
 }
 ###
 
+tag sticky-note
+
+  ### css scoped
+    .note {
+      background: purple;
+      background: #FFFF80;
+      min-width: 128px;
+      min-height: 128px;
+      padding: 1rem;
+      margin: 0.15rem;
+    }
+  ###
+
+  def noteChanged
+    self.callback(self.id)
+
+  def render
+    <self.note id=self.note contentEditable=true
+      :keydown.noteChanged() 
+      innerHTML=self.body>
+
 tag sticky-notes
 
   def setup
@@ -18,10 +39,6 @@ tag sticky-notes
       k.startsWith("note")
     for key in keys
       @notes.push(JSON.parse(localStorage.getItem(key)))
-
-  def syncStorage
-    console.log "syncStorage"
-    localStorage.setItem('notes', JSON.stringify(self.notes))
 
   # TODO: also handle deletion, maybe delete when hitting backspace in an empty
   # note
@@ -36,21 +53,13 @@ tag sticky-notes
 
   def noteChanged identifier
     let body = document.querySelector("#{identifier}").innerHTML
-    let id = identifier
-    let note = {id: id, body: body}
-    localStorage.setItem(id, JSON.stringify(note))
+    let note = {id: identifier, body: body}
+    console.log('persist', note)
+    localStorage.setItem(identifier, JSON.stringify(note))
 
   def render
     ### css scoped
     h1 {
-    }
-    .note {
-      background: purple;
-      background: #FFFF80;
-      min-width: 128px;
-      min-height: 128px;
-      padding: 1rem;
-      margin: 0.15rem;
     }
     .notes {
       display: grid;
@@ -73,6 +82,5 @@ tag sticky-notes
       <button :click.createNew()> "New"
       <div.notes>
         for note in @notes
-          <div.note id="{note.id}" contentEditable=true :keydown.noteChanged(note.id) innerHTML=note.body>
-          # TODO: refactor note div into a own tag.
+          <sticky-note id=note.id body=note.body callback=self.noteChanged>
 imba.mount <sticky-notes>
