@@ -73,7 +73,6 @@ tag sticky-notes
       <button :click.createNew()> "New"
       <div.notes>
         for note in @notes
-          <div.note id="{note.id}" contentEditable=true :keydown.noteChanged(note.id)>
-            <p> note.body
+          <div.note id="{note.id}" contentEditable=true :keydown.noteChanged(note.id) innerHTML=note.body>
           # TODO: refactor note div into a own tag.
 imba.mount <sticky-notes>
