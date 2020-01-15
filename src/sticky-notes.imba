@@ -22,12 +22,12 @@ tag sticky-note
     }
   ###
 
-  def noteChanged
-    self.callback(self.id)
+  def noteChanged event
+    self.callback(self.id, event.code)
 
   def render
     <self.note id=self.note contentEditable=true
-      :keydown.noteChanged() 
+      :keydown.noteChanged
       innerHTML=self.body>
 
 tag sticky-notes
@@ -50,11 +50,18 @@ tag sticky-notes
     localStorage.setItem(id, JSON.stringify(note))
     container.appendChild(<sticky-note body='' id=id callback=self.noteChanged>)
 
-  def noteChanged identifier
-    let body = document.querySelector("#{identifier}").innerHTML
-    let note = {id: identifier, body: body}
-    console.log('persist', note)
-    localStorage.setItem(identifier, JSON.stringify(note))
+  def noteChanged identifier, keyCode
+    const element = document.querySelector("#{identifier}")
+    const body = element.innerHTML
+    const text = element.innerText
+    console.log('TEXT', text)
+    if keyCode == 'Backspace' && text.length == 0
+      const parent = document.querySelector(".notes")
+      parent.removeChild(element)
+      localStorage.removeItem(identifier)
+    else
+      let note = {id: identifier, body: body}
+      localStorage.setItem(identifier, JSON.stringify(note))
 
   def render
     ### css scoped
