@@ -38,17 +38,16 @@ tag sticky-notes
     let keys = Object.keys(localStorage).filter do |k|
       k.startsWith("note")
     for key in keys
-      @notes.push(JSON.parse(localStorage.getItem(key)))
+      @notes.unshift(JSON.parse(localStorage.getItem(key)))
 
-  # TODO: also handle deletion, maybe delete when hitting backspace in an empty
-  # note
   def createNew
     let container = document.querySelector(".notes")
     let count = Object.keys(localStorage).length + 1
     let id = "note-{count}"
     let note = {body: '', id: id}
     localStorage.setItem(id, JSON.stringify(note))
-    container.appendChild(<sticky-note body='' id=id callback=self.noteChanged>)
+    let firstNote = container.children[0]
+    container.insertBefore(<sticky-note body='' id=id callback=self.noteChanged>, firstNote)
 
   def noteChanged identifier, keyCode
     const element = document.querySelector("#{identifier}")
@@ -90,7 +89,6 @@ tag sticky-notes
         for note in @notes
           <sticky-note id=note.id body=note.body callback=self.noteChanged>
 imba.mount <sticky-notes>
-# TODO: investigate why the last character keeps disappearing randomly during refresh
 # TODO: Handle ordering
 # TODO: Support drag and drop
 
