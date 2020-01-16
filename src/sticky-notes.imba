@@ -2,6 +2,10 @@
 body {
   margin: 0;
   padding: 0;
+
+  background: center / cover no-repeat url(https://source.unsplash.com/random);
+  width: 100vw;
+  height: 100vh;
 }
 
 .container {
@@ -58,6 +62,7 @@ tag sticky-notes
       const parent = document.querySelector(".notes")
       parent.removeChild(element)
       localStorage.removeItem(identifier)
+      # TODO: set the focus to the previous sticky note if any
     else
       let note = {id: identifier, body: body}
       localStorage.setItem(identifier, JSON.stringify(note))
