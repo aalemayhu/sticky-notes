@@ -51,7 +51,9 @@ tag sticky-notes
     let note = {body: '', id: id}
     localStorage.setItem(id, JSON.stringify(note))
     let firstNote = container.children[0]
-    container.insertBefore(<sticky-note body='' id=id callback=self.noteChanged>, firstNote)
+    let newNote = <sticky-note body='' id=id callback=self.noteChanged>
+    container.insertBefore(newNote, firstNote)
+    newNote.focus()
 
   def noteChanged identifier, keyCode
     const element = document.querySelector("#{identifier}")
@@ -62,7 +64,8 @@ tag sticky-notes
       const parent = document.querySelector(".notes")
       parent.removeChild(element)
       localStorage.removeItem(identifier)
-      # TODO: set the focus to the previous sticky note if any
+      if parent.children.length > 0
+        parent.children[0].focus()
     else
       let note = {id: identifier, body: body}
       localStorage.setItem(identifier, JSON.stringify(note))
