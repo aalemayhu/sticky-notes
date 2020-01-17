@@ -1,8 +1,11 @@
 ### css
-body {
+
+html, body {
   margin: 0;
   padding: 0;
+}
 
+body {
   background: center / cover no-repeat url(https://source.unsplash.com/random);
   width: 100vw;
   height: 100vh;
@@ -23,6 +26,7 @@ tag sticky-note
       min-height: 128px;
       padding: 1rem;
       margin: 0.15rem;
+      border: 0.1rem solid black;
     }
   ###
 
@@ -70,6 +74,28 @@ tag sticky-notes
       let note = {id: identifier, body: body}
       localStorage.setItem(identifier, JSON.stringify(note))
 
+  def header
+      ### css scoped
+      header {
+        display: flex;
+        justify-content: space-between;
+        background: #00000080;
+        padding: 0.9rem 1rem;
+        margin: 3rem;
+      }
+      h1 {
+          color: white;
+          margin: 0.3rem;
+          order: 0;
+      }
+      .new-note-button {
+        order: 1;
+      }
+      ###
+      <header>
+        <h1> "Sticky Notes"
+        <button.new-note-button :click.createNew()> "New"
+
   def render
     ### css scoped
     h1 {
@@ -77,6 +103,7 @@ tag sticky-notes
     .notes {
       display: grid;
       grid-template: 1fr / 1fr;
+      margin: 3rem;
     }
     
     @media (min-width: 640px) {
