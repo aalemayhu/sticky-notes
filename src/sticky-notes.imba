@@ -117,20 +117,24 @@ tag sticky-notes
         grid-template: 1fr / repeat(4, 1fr);
       }
     }
-
-    header {
-      background: black;
-      padding: 0 1rem;
-    }
     ###
     <self.container>
-      <header>
-        <button :click.createNew()> "New"
+      self.header()
       <div.notes>
         for note in @notes
           <sticky-note id=note.id body=note.body callback=self.noteChanged>
 imba.mount <sticky-notes>
+
+### css
+  @media print {
+    .new-note-button {
+      display: none;
+    }
+  }
+###
+
 # TODO: Handle ordering
 # TODO: Support drag and drop
 # TODO: add export button, print to pdf
 # TODO: Color picker
+# TODO: Handle different heights on the sticky notes
