@@ -18,6 +18,8 @@ body {
 
 tag sticky-note
 
+  @isDragging = false
+
   ### css scoped
     .note {
       background: purple;
@@ -28,15 +30,28 @@ tag sticky-note
       margin: 0.15rem;
       border: 0.1rem solid black;
     }
+
+    .dragged {
+      opacity: 0.6;
+      border-color: white;
+    }
   ###
 
   def noteChanged event
     self.callback(self.id, event.code)
 
+  def dragstart event
+    console.log('dragstart', event)
+    self.isDragging = true
+
+  def dragend event
+    console.log('dragend', event)
+    self.isDragging = false
+
   def render
-    <self.note id=self.note contentEditable=true
-      :keydown.noteChanged
-      innerHTML=self.body>
+    <self.note .dragged=(self.isDragging) draggable=true 
+    ondragstart=self.dragstart ondragend=self.dragend>
+      <div id=self.note contentEditable=true :keydown.noteChanged innerHTML=self.body>
 
 tag sticky-notes
 
