@@ -48,8 +48,13 @@ tag sticky-note
     console.log('dragend', event)
     self.isDragging = false
 
+  def focusOnNote
+    const element = self.children[0]
+    element.focus()
+
   def render
     <self.note .dragged=(self.isDragging) draggable=true 
+    :click.focusOnNote()
     ondragstart=self.dragstart ondragend=self.dragend>
       <div id=self.note contentEditable=true :keydown.noteChanged innerHTML=self.body>
 
