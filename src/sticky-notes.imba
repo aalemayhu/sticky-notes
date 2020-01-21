@@ -37,9 +37,6 @@ tag sticky-note
     }
   ###
 
-  def noteChanged event
-    self.callback(self.id, event.code)
-
   def dragstart event
     console.log('dragstart', event)
     self.isDragging = true
@@ -56,7 +53,8 @@ tag sticky-note
     <self.note .dragged=(self.isDragging) draggable=true 
     :click.focusOnNote()
     ondragstart=self.dragstart ondragend=self.dragend>
-      <div id=self.note contentEditable=true :keydown.noteChanged innerHTML=self.body>
+      <div id=self.note contentEditable=true :keydown.trigger('notechanged') innerHTML=self.body>
+
 
 tag sticky-notes
 
@@ -69,30 +67,27 @@ tag sticky-notes
       @notes.unshift(JSON.parse(localStorage.getItem(key)))
 
   def createNew
-    let container = document.querySelector(".notes")
     let count = Object.keys(localStorage).length + 1
     let id = "note-{count}"
-    let note = {body: '', id: id}
-    localStorage.setItem(id, JSON.stringify(note))
-    let firstNote = container.children[0]
-    let newNote = <sticky-note body='' id=id callback=self.noteChanged>
-    container.insertBefore(newNote, firstNote)
+    localStorage.setItem(id, JSON.stringify({body: '', id: id}))
+    let firstNote = self.notes.children[0]
+    let newNote = <sticky-note body='' id=id>
+    self.notes.insertBefore(newNote, firstNote)
     newNote.focus()
 
-  def noteChanged identifier, keyCode
-    const element = document.querySelector("#{identifier}")
-    const body = element.innerHTML
-    const text = element.innerText
-    console.log('TEXT', text)
-    if keyCode == 'Backspace' && text.length == 0
-      const parent = document.querySelector(".notes")
-      parent.removeChild(element)
-      localStorage.removeItem(identifier)
-      if parent.children.length > 0
-        parent.children[0].focus()
-    else
-      let note = {id: identifier, body: body}
-      localStorage.setItem(identifier, JSON.stringify(note))
+  def deleteNote note
+    const text = note.innerText
+    const parent = self.notes
+    parent.removeChild(element)
+    localStorage.removeItem(note.id)
+    if parent.children.length > 0
+      parent.children[0].focus()
+    # if keyCode == 'Backspace' && text.length == 0
+
+  def updateNote note, event
+    console.log('event', event)
+    const body = note.innerHTML
+    localStorage.setItem(note.id, JSON.stringify({id: note.id, body: body}))
 
   def header
       ### css scoped
@@ -142,7 +137,9 @@ tag sticky-notes
       self.header()
       <div.notes>
         for note in @notes
-          <sticky-note id=note.id body=note.body callback=self.noteChanged>
+          # .trigger.MyCoolMethod()
+          # .submit.emit('MyCoolMethod', $)
+          <sticky-note body=note.body :notechanged.updateNote(note, $)>
 imba.mount <sticky-notes>
 
 ### css
