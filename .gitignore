@@ -109,3 +109,6 @@ dist
 
 *.swo
 *.swp
+
+*.js
+*.map

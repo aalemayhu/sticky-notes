@@ -5,13 +5,15 @@
   "author": "Alexander Alemayhu <alexander@alemayhu.com>",
   "license": "MIT",
   "scripts": {
-    "build": "rollup -c",
-    "watch": "rollup -c --watch",
-    "serve": "parcel public/index.html",
+    "build": "imba-rollup -c",
+    "watch": "imba-rollup --watch",
+    "start": "imba-rollup --watch --serve --hmr",
+    "serve": "imba-rollup --serve",
     "check-version": "imbac --version"
   },
   "dependencies": {
-    "imba": "^2.0.0-alpha.22"
+    "imba": "^2.0.0-alpha.22",
+    "imba-rollup": "^1.0.4"
   },
   "devDependencies": {
     "parcel": "^1.12.4",
