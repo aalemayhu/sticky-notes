@@ -54,7 +54,6 @@ tag sticky-note
     :click.focusOnNote()
     ondragstart=self.dragstart ondragend=self.dragend>
       <div id=self.note.id contentEditable=true 
-      :keydown.backspace.trigger('emptynote')
       :keydown.trigger('notechanged') innerHTML=self.note.body>
 
 
@@ -70,27 +69,24 @@ tag sticky-notes
 
   def createNew
     let count = Object.keys(localStorage).length + 1
-    let id = "note-{count}"
-    localStorage.setItem(id, JSON.stringify({body: '', id: id}))
-    let firstNote = self.notes.children[0]
-    let newNote = <sticky-note body='' id=id>
-    self.notes.insertBefore(newNote, firstNote)
-    newNote.focus()
-
-  def deleteNote note
-    let element = document.querySelector("#{note.id}")
-    const text = element.innerText.trim()
-    console.log('text', text, text.length)
-    return if text.length > 0
-    self.notes = self.notes.filter do |x|
-      x.id != note.id
-    const parent = self.notes
-    localStorage.removeItem(note.id)
-    if parent.length > 0
-      parent[0].focus()
+    const note = {body: '', id: "note-{count}"}
+    localStorage.setItem(note.id, JSON.stringify(note))
+    self.notes.unshift(note)
+    # newNote.focus()
 
   def updateNote note, event
     const element = document.querySelector("#{note.id}")
+    const text = element.innerText.trim()
+    const key = event.originalEvent.key
+    # Delete note
+    if key == 'Backspace' && text.length == 0
+      console.log('deleteNote', note)
+      self.notes = self.notes.filter do |x|
+        x.id != note.id
+      localStorage.removeItem(note.id)
+      # if parent.length > 0
+      #  parent[0].focus()
+      return
     const body = element.innerHTML
     localStorage.setItem(note.id, JSON.stringify({id: note.id, body: body}))
 
