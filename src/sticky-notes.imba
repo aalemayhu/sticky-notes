@@ -53,7 +53,9 @@ tag sticky-note
     <self.note .dragged=(self.isDragging) draggable=true 
     :click.focusOnNote()
     ondragstart=self.dragstart ondragend=self.dragend>
-      <div id=self.note contentEditable=true :keydown.trigger('notechanged') innerHTML=self.body>
+      <div id=self.note.id contentEditable=true 
+      :keydown.backspace.trigger('emptynote')
+      :keydown.trigger('notechanged') innerHTML=self.note.body>
 
 
 tag sticky-notes
@@ -76,17 +78,20 @@ tag sticky-notes
     newNote.focus()
 
   def deleteNote note
-    const text = note.innerText
+    let element = document.querySelector("#{note.id}")
+    const text = element.innerText.trim()
+    console.log('text', text, text.length)
+    return if text.length > 0
+    self.notes = self.notes.filter do |x|
+      x.id != note.id
     const parent = self.notes
-    parent.removeChild(element)
     localStorage.removeItem(note.id)
-    if parent.children.length > 0
-      parent.children[0].focus()
-    # if keyCode == 'Backspace' && text.length == 0
+    if parent.length > 0
+      parent[0].focus()
 
   def updateNote note, event
-    console.log('event', event)
-    const body = note.innerHTML
+    const element = document.querySelector("#{note.id}")
+    const body = element.innerHTML
     localStorage.setItem(note.id, JSON.stringify({id: note.id, body: body}))
 
   def header
@@ -137,9 +142,9 @@ tag sticky-notes
       self.header()
       <div.notes>
         for note in @notes
-          # .trigger.MyCoolMethod()
-          # .submit.emit('MyCoolMethod', $)
-          <sticky-note body=note.body :notechanged.updateNote(note, $)>
+          <sticky-note note=note 
+          :emptynote.deleteNote(note)
+          :notechanged.updateNote(note, $)>
 imba.mount <sticky-notes>
 
 ### css
