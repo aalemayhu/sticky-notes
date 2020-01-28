@@ -151,9 +151,11 @@ imba.mount <sticky-notes>
   }
 ###
 
-# TODO: Handle ordering
 # TODO: Support drag and drop
-# TODO: add export button, print to pdf
+# TODO: Handle ordering (save order)
 # TODO: Color picker
 # TODO: Handle different heights on the sticky notes
+# TODO: fix text selection
+# TODO: add export button, print to pdf
 # TODO: add default notes when the array is empty (similiar to what stickies do on macOS)
+# TODO: log of the backgrounds
