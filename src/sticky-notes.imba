@@ -1,5 +1,7 @@
-### css
+import './components/the-note'
+import './components/the-header'
 
+### css
 html, body {
 	margin: 0;
 	padding: 0;
@@ -15,48 +17,6 @@ body {
 	background: #FFF;
 }
 ###
-
-tag sticky-note
-
-	@isDragging = false
-
-	### css scoped
-		.note {
-			background: purple;
-			background: #FFFF80;
-			min-width: 128px;
-			min-height: 128px;
-			padding: 1rem;
-			margin: 0.15rem;
-			border: 0.1rem solid black;
-		}
-
-		.dragged {
-			opacity: 0.6;
-			border-color: white;
-		}
-	###
-
-	def dragstart event
-		console.log('dragstart', event)
-		self.isDragging = true
-
-	def dragend event
-		console.log('dragend', event)
-		self.isDragging = false
-
-	def focusOnNote
-		const element = self.children[0]
-		element.focus()
-
-	def render
-		<self.note .dragged=(self.isDragging) draggable=true 
-		:click.focusOnNote()
-		ondragstart=self.dragstart ondragend=self.dragend>
-			<div id=self.note.id contentEditable=true 
-			:keydown.trigger('notechanged') innerHTML=self.note.body>
-
-
 tag sticky-notes
 
 	def localStorage
@@ -93,28 +53,6 @@ tag sticky-notes
 		const body = element.innerHTML
 		localStorage().setItem(note.id, JSON.stringify({id: note.id, body: body}))
 
-	def header
-			### css scoped
-			header {
-				display: flex;
-				justify-content: space-between;
-				background: #00000080;
-				padding: 0.9rem 1rem;
-				margin: 3rem;
-			}
-			h1 {
-					color: white;
-					margin: 0.3rem;
-					order: 0;
-			}
-			.new-note-button {
-				order: 1;
-			}
-			###
-			<header>
-				<h1> "Sticky Notes"
-				<button.new-note-button :click.createNew()> "New"
-
 	def render
 		### css scoped
 		h1 {
@@ -138,7 +76,7 @@ tag sticky-notes
 		}
 		###
 		<self.container>
-			self.header()
+			<the-header>
 			<div.notes>
 				for note in @notes
 					<sticky-note note=note 
