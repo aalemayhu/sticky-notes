@@ -1,0 +1,11 @@
+{
+	"entries": [{
+		"input": "./src/sticky-notes.imba",
+		"output": {
+			"file": "./public/bundle.js",
+			"format": "esm",
+        	"name": "bundle",
+        	"sourcemap": true
+		}
+	}]
+}

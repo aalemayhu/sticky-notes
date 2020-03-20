@@ -5,18 +5,14 @@
   "author": "Alexander Alemayhu <alexander@alemayhu.com>",
   "license": "MIT",
   "scripts": {
-    "build": "rollup -c",
-    "watch": "rollup -c --watch",
-    "serve": "parcel public/index.html",
+    "build": "imba-rollup",
+    "watch": "imba-rollup --watch",
+    "serve": "imba-rollup --watch --serve --hmr",
+    "dev": "yarn serve",
     "check-version": "imbac --version"
   },
   "dependencies": {
-    "imba": "^2.0.0-alpha.22"
-  },
-  "devDependencies": {
-    "parcel": "^1.12.4",
-    "rollup": "^1.28.0",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-node-resolve": "^5.2.0"
+    "imba": "^2.0.0-alpha.36",
+    "imba-rollup": "^2.0.0-alpha.31"
   }
 }
