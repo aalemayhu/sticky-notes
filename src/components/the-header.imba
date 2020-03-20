@@ -9,7 +9,8 @@ tag the-header
 	<self>
 		<header>
 			<h1> "Sticky Notes"
-			<button.new-note-button :click.createNew()> "New"
+			<button.new-note-button
+				:click.{console.log(#context.store.createNote())}> "New"
 ### css scoped
 header {
 	display: flex;

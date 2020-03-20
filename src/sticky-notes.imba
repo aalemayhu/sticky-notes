@@ -2,6 +2,8 @@ import './components/the-header'
 import './components/the-note'
 import './components/the-list'
 
+import {DefaultStore} from './store'
+
 ### css
 html, body {
 	margin: 0;
@@ -20,23 +22,8 @@ body {
 ###
 tag sticky-notes
 
-	def localStorage
-		window.localStorage
-
 	def setup
-		@notes = []
-
-		let keys = Object.keys(localStorage()).filter do |k|
-			k.startsWith("note")
-		for key in keys
-			@notes.unshift(JSON.parse(localStorage().getItem(key)))
-
-	def createNew
-		let count = Object.keys(localStorage()).length + 1
-		const note = {body: '', id: "note-{count}"}
-		localStorage().setItem(note.id, JSON.stringify(note))
-		self.notes.unshift(note)
-		# newNote.focus()
+		@store = DefaultStore.new('note')
 
 	def updateNote note, event
 		const element = document.querySelector("#{note.id}")
@@ -44,20 +31,17 @@ tag sticky-notes
 		const key = event.originalEvent.key
 		# Delete note
 		if key == 'Backspace' && text.length == 0
-			console.log('deleteNote', note)
-			self.notes = self.notes.filter do |x|
-				x.id != note.id
-			localStorage().removeItem(note.id)
+			@store.deleteNote(note.id)
 			# if parent.length > 0
 			#  parent[0].focus()
 			return
-		const body = element.innerHTML
-		localStorage().setItem(note.id, JSON.stringify({id: note.id, body: body}))
+		else
+			@store.updateNote(note.id, element.innerHTML)
 
 	def render	
 		<self.container>
 			<the-header>
-			<the-list notes=@notes>
+			<the-list notes=store.notes>
 imba.mount <sticky-notes>
 
 # TODO: Support drag and drop
