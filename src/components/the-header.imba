@@ -1,3 +1,15 @@
+### css
+	@media print {
+		.new-note-button {
+			display: none;
+		}
+	}
+###
+tag the-header	
+	<self>
+		<header>
+			<h1> "Sticky Notes"
+			<button.new-note-button :click.createNew()> "New"
 ### css scoped
 header {
 	display: flex;
@@ -15,8 +27,3 @@ h1 {
 	order: 1;
 }
 ###
-tag the-header
-	<self>
-		<header>
-			<h1> "Sticky Notes"
-			<button.new-note-button :click.createNew()> "New"

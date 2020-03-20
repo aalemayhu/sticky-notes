@@ -60,14 +60,6 @@ tag sticky-notes
 			<the-list notes=@notes>
 imba.mount <sticky-notes>
 
-### css
-	@media print {
-		.new-note-button {
-			display: none;
-		}
-	}
-###
-
 # TODO: Support drag and drop
 # TODO: Handle ordering (save order)
 # TODO: Color picker
