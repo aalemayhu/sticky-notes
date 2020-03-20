@@ -1,5 +1,6 @@
-import './components/the-note'
 import './components/the-header'
+import './components/the-note'
+import './components/the-list'
 
 ### css
 html, body {
@@ -53,35 +54,10 @@ tag sticky-notes
 		const body = element.innerHTML
 		localStorage().setItem(note.id, JSON.stringify({id: note.id, body: body}))
 
-	def render
-		### css scoped
-		h1 {
-		}
-		.notes {
-			display: grid;
-			grid-template: 1fr / 1fr;
-			margin: 3rem;
-		}
-		
-		@media (min-width: 640px) {
-			.notes {
-				grid-template: 1fr / repeat(3, 1fr);
-			}
-		}
-
-		@media (min-width: 1024px) {
-			.notes {
-				grid-template: 1fr / repeat(4, 1fr);
-			}
-		}
-		###
+	def render	
 		<self.container>
 			<the-header>
-			<div.notes>
-				for note in @notes
-					<sticky-note note=note 
-					:emptynote.deleteNote(note)
-					:notechanged.updateNote(note, $)>
+			<the-list notes=@notes>
 imba.mount <sticky-notes>
 
 ### css
