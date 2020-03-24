@@ -36,7 +36,7 @@ tag sticky-notes
 			#  parent[0].focus()
 			return
 		else
-			@store.updateNote(note.id, element.innerHTML)
+			@store.updateNote(note)
 
 	def render	
 		<self.container>

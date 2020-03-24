@@ -24,6 +24,5 @@ export class DefaultStore
 		@notes = @notes.filter do |x| x.id != id
 		@localStorage.removeItem(id)
 
-	def updateNote id, body
-		const p = JSON.stringify({id: id, body: body})
-		@localStorage.setItem(id, p)
+	def updateNote note
+		@localStorage.setItem(note.id, JSON.stringify(note))

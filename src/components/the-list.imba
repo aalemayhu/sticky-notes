@@ -27,3 +27,5 @@ tag the-list
 				note=note 
 				:emptynote.deleteNote(note)
 				:notechanged.updateNote(note, $)>
+				if window.location.pathname.includes('debug')
+					<pre css:background="white"> JSON.stringify(note, null, 2)

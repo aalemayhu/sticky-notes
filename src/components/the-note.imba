@@ -1,5 +1,4 @@
 tag sticky-note
-
 	prop note
 	@isDragging = false
 
@@ -25,6 +24,14 @@ tag sticky-note
 			padding: 1rem;
 			margin: 0.15rem;
 			border: 0.1rem solid black;
+
+			display: flex;
+			justify-content: space-between;
+			flex-direction: column;
+		}
+
+		.color-picker {
+			align-self: flex-end;
 		}
 
 		.dragged {
@@ -32,9 +39,10 @@ tag sticky-note
 			border-color: white;
 		}
 		###
-		<self.note .dragged=(self.isDragging) draggable=true 
+		<self.note css:background=@note.color .dragged=(self.isDragging) draggable=true 
 		:click.focusOnNote()
 		ondragstart=self.dragstart ondragend=self.dragend>
 			<div id=self.note.id contentEditable='true' 
-			:keydown.trigger('notechanged') innerHTML=self.note.body>
+			:keydown.trigger('notechanged', self.note) innerHTML=self.note.body>
+			<input[@note.color] .color-picker type="color">
 
