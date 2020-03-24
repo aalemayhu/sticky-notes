@@ -1,5 +1,6 @@
 tag sticky-note
 
+	prop note
 	@isDragging = false
 
 	def dragstart event
@@ -34,6 +35,6 @@ tag sticky-note
 		<self.note .dragged=(self.isDragging) draggable=true 
 		:click.focusOnNote()
 		ondragstart=self.dragstart ondragend=self.dragend>
-			<div id=self.note.id contentEditable=true 
+			<div id=self.note.id contentEditable='true' 
 			:keydown.trigger('notechanged') innerHTML=self.note.body>
 

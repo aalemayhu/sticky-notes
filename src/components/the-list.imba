@@ -1,4 +1,6 @@
 tag the-list
+	prop notes = []
+
 	### css scoped
 	.notes {
 		display: grid;
@@ -21,6 +23,7 @@ tag the-list
 	<self>
 		<div.notes>
 			for note in @notes
-				<sticky-note note=note 
+				<sticky-note 
+				note=note 
 				:emptynote.deleteNote(note)
 				:notechanged.updateNote(note, $)>
