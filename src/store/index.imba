@@ -19,5 +19,5 @@ export class DefaultStore
 		@localStorage.removeItem(id)
 
 	def updateNote id, body
-		const p = JSON.stringify({id: note.id, body: body})
-		@localStorage.setItem(note.id, p)
+		const p = JSON.stringify({id: id, body: body})
+		@localStorage.setItem(id, p)
