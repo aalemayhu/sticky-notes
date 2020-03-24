@@ -1,4 +1,5 @@
-### css scoped
+tag the-list
+	### css scoped
 	.notes {
 		display: grid;
 		grid-template: 1fr / 1fr;
@@ -16,8 +17,7 @@
 			grid-template: 1fr / repeat(4, 1fr);
 		}
 	}
-###
-tag the-list
+	###
 	<self>
 		<div.notes>
 			for note in @notes

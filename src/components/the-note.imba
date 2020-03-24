@@ -2,7 +2,20 @@ tag sticky-note
 
 	@isDragging = false
 
-	### css scoped
+	def dragstart event
+		console.log('dragstart', event)
+		self.isDragging = true
+
+	def dragend event
+		console.log('dragend', event)
+		self.isDragging = false
+
+	def focusOnNote
+		const element = self.children[0]
+		element.focus()
+
+	def render
+		### css scoped
 		.note {
 			background: purple;
 			background: #FFFF80;
@@ -17,21 +30,7 @@ tag sticky-note
 			opacity: 0.6;
 			border-color: white;
 		}
-	###
-
-	def dragstart event
-		console.log('dragstart', event)
-		self.isDragging = true
-
-	def dragend event
-		console.log('dragend', event)
-		self.isDragging = false
-
-	def focusOnNote
-		const element = self.children[0]
-		element.focus()
-
-	def render
+		###
 		<self.note .dragged=(self.isDragging) draggable=true 
 		:click.focusOnNote()
 		ondragstart=self.dragstart ondragend=self.dragend>
