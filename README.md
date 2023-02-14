@@ -4,5 +4,3 @@
 
 A small web application to setup / write some notes. The app uses
 local storage for persistence.
-
-Built live on YouTube, hour long [videos available](https://alemayhu.com/playlist) .
